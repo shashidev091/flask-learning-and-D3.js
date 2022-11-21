@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %} {{context.title}} {% endblock %} 
+{% block mainContent %}
+<div class="container p-2 d3-one"></div>
+<div class="container p-2 d3-clock">
+  <svg width="500" height="500">
+    <rect
+      width="400"
+      height="400"
+      fill="orange"
+      stroke="lightgreen"
+      stroke-width="5"
+      x="25"
+      y="25"
+    ></rect>
+    <g x="100" y="300">
+      <circle
+        r="100"
+        fill="lightgreen"
+        stroke="orangered"
+        cx="235"
+        cy="125"
+      ></circle>
+      <line
+        x1="235"
+        y1="125"
+        y2="35"
+        x2="235"
+        stroke="blue"
+        stroke-width="5"
+      ></line>
+      <line
+        x1="235"
+        y1="125"
+        y2="85"
+        x2="245"
+        stroke="red"
+        stroke-width="6"
+      ></line>
+      <line
+        x1="235"
+        y1="125"
+        y2="200"
+        x2="180"
+        stroke="green"
+        stroke-width="2"
+      ></line>
+      <circle r="5" cx="235" cy="125" />
+      <circle r="5" cx="235" cy="25" />
+      <text x="225" y="15">12</text>
+      <circle r="5" cx="335" cy="125" />
+      <text x="340" y="130">3</text>
+      <circle r="5" cx="235" cy="225" />
+      <text x="230" y="245">6</text>
+      <circle r="5" cx="135" cy="125" />
+      <text x="120" y="130">9</text>
+
+    </g>
+    <path d="M150,300 L300,300" fill="none" stroke="black" stroke-width="10"></path>
+  </svg>
+</div>
+<div class="container p-2 d3-li">
+    <ul>
+        <li class="items">item 1</li>
+        <li class="items">item 2</li>
+        <li class="items">item 3</li>
+        <li class="items">item 4</li>
+        <li class="items">item 5</li>
+    </ul>
+</div>
+<div class="container p-2 col-md-6">
+    <div class="input-group mb-3 col-md-4">
+        <input type="text" class="form-control inp" placeholder="item" aria-label="itemname" aria-describedby="basic-addon1">
+        <button class="input-group-text btn btn-primary" id="basic-addon1" onclick="addElement()">Add</button>
+        <button class="input-group-text btn btn-danger" id="basic-addon1" onclick="removeElement()">delete</button>
+    </div>
+</div>
+<div class="container p-2 d3-fetch">
+    <table class="table-secondary">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Power</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+    </tbody>
+   </table>
+</div>
+
+<div class="container p-2">
+    <div id="chart"></div>
+</div>
+{% endblock %}
+{% block jsBottom %}
+    <script src="static/js/dummy_data.js"></script>
+    <script src="static/js/friday.js"></script>
+{% endblock %}

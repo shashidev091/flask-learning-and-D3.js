@@ -1,0 +1,50 @@
+<div
+  class="modal fade"
+  id="exampleModal{{todo.id}}"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <form action="/update_todo/{{todo.id}}" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Update todo id: {{todo.id}}
+          </h1>
+          <div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="update-title" class="col-form-label">title:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="update-title"
+              name="title"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="update-desc" class="col-form-label">description:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="update-desc"
+              name="desc"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

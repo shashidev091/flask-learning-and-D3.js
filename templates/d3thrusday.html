@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{context.title}}</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+      .svgs rect:nth-child(odd) {
+        fill: palevioletred;
+      }
+
+      .svgs rect:nth-child(even) {
+        fill: lightgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container p-2 d3-container">
+        <ul class="ul-ctr">
+            <li>item 1</li>
+            <li>item 2</li>
+            <li>item 3</li>
+        </ul>
+        <div class="container col">
+            <button onclick="addItem()" class="btn btn-primary btn-sm">add item</button>
+            <button onclick="countItems()" class="btn btn-primary btn-sm">count items</button>
+            <button onclick="removeAllItems()" class="btn btn-primary btn-sm">remove all items</button>
+            <button onclick="removeLast()" class="btn btn-primary btn-sm">remove last item</button>
+        </div>
+    </div>
+
+    <div class="container p-2 d3-container1">
+        <img src="https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=800" alt="dog">
+        <div class="container col">
+            <button onclick="changeAnimal()" class="btn btn-primary btn-sm">change animal</button>
+            <button onclick="changeColor()" class="btn btn-primary btn-sm">fetch data</button>
+            <button onclick="understand_reduce()" class="btn btn-primary btn-sm">reduce</button>
+        </div>
+    </div>
+    <a href="static/data" download="shashi.csv" class="btn btn-success">download</a>
+
+    <div class="container">
+        <svg style="border: solid 1px black">
+            <g class="svg-style" transform="translate(50, 50) rotate(30, 50, 50)">
+                <rect x=20 y=20 width=50 height=50 fill="black"/>
+                <circle fill="orange" r=20 cx=45 cy="45" />
+                <text>Hello</text>
+            </g>
+        </svg>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-scale@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-axis@3"></script>
+    <script src="/static/js/dummy_data.js"></script>
+    <script src="static/js/app1.js"></script>
+  </body>
+</html>

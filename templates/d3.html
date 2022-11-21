@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3.js</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <style>
+      .svgs rect:nth-child(odd) {
+        fill: palevioletred;
+      }
+
+      .svgs rect:nth-child(even) {
+        fill: lightgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      class="d-flex justify-content-center align-items-center w-100"
+    >
+      <!-- Then put toasts within -->
+      <div
+        class="toast"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        id="liveToast"
+      >
+        <div class="toast-header">
+          <!-- <img src="..." class="rounded me-2" alt="..." /> -->
+          <strong class="me-auto">Bootstrap</strong>
+          <small>11 mins ago</small>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body"></div>
+      </div>
+    </div>
+    <div>
+      <h2>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit,
+        blanditiis, eligendi vero incidunt qui saepe corporis labore iusto
+        numquam possimus laudantium quidem.
+      </h2>
+    </div>
+
+    <div>
+      <ul class="unordered"></ul>
+    </div>
+    <div>
+      <svg class="svgs"></svg>
+    </div>
+    <div class="container svg-new"></div>
+
+    <div class="container p-2 chart-4"></div>
+    <div class="container">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control inptext"
+          placeholder="item"
+          aria-label="Add item"
+          aria-describedby="button-addon2"
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="button-addon2"
+          onclick="addItem(event)"
+        >
+          add Item
+        </button>
+      </div>
+    </div>
+
+    <!-- Example four -->
+
+    <div class="container p-2 chart-five">
+
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-scale@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3-axis@3"></script>
+    <script src="/static/js/dummy_data.js"></script>
+    <script src="static/js/app.js"></script>
+  </body>
+</html>
