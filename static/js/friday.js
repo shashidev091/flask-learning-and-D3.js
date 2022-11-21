@@ -155,7 +155,7 @@ drawScatterplot();
 
 
 
-// Eperimental  
+// Experimental  
 window.onresize = () => {
     const chart = d3.select('#chart').selectAll('svg').remove()
     console.log(chart)
