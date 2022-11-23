@@ -71,8 +71,8 @@ const fetching = async () => {
     .select("tbody")
     .selectAll("tr")
     .data(returned)
-    .join((enter) => enter.append("tr").append("td"))
-    .text((d) => `${d.name} ${d.power}`);
+    .join((enter) => enter.append("tr"))
+    .html((d) => `<td>${d.name}</td><td> ${d.power} </td>`);
 };
 
 fetching();
@@ -92,11 +92,11 @@ const drawScatterplot = async () => {
   const yAccessor = d => d.currently.apparentTemperature
 
 
-  const offsetwidth = document.querySelector('#chart').offsetWidth
-  console.log(offsetwidth)
+  const offsetWidth = document.querySelector('#chart').offsetWidth
+  console.log(offsetWidth)
   // Dimensions
   let dimensions = {
-    width: offsetwidth,
+    width: offsetWidth,
     height: 500,
     margin: {
       top: 50,
@@ -136,7 +136,7 @@ const drawScatterplot = async () => {
 
     const yScale = d3.scaleLinear()
         .domain(d3.extent(dataset, yAccessor))
-        .rangeRound([0, dimensions.ctrHeight])
+        .rangeRound([dimensions.ctrHeight, 0])
         .nice()
         .clamp(true)
 
@@ -149,6 +149,39 @@ const drawScatterplot = async () => {
         .attr('cy', d => yScale(yAccessor(d)))
         .attr('r', 3)
         .attr('fill', 'red')
+        .attr('data-temp', yAccessor)
+    
+    
+// Axis
+    const xAxis = d3.axisBottom(xScale)
+        // .tickValues([0.4, 0.5, 0.8])
+        .ticks(5)
+        .tickFormat(d => d * 100 + '%')
+
+    const yAxis = d3.axisLeft(yScale)
+
+    const xAxisGroup = group_container.append('g')
+        .call(xAxis)
+        .style('transform', `translateY(${dimensions.ctrHeight}px)`)
+        .classed('axis', true)
+
+    xAxisGroup.append('text')
+        .attr('x', dimensions.ctrWidth / 2)
+        .attr('y', dimensions.margin.bottom - 10)
+        .attr('fill', 'black')
+        .text('Humidity')
+
+    const yAxisGroup = group_container.append('g')
+        .call(yAxis) 
+        .classed('axis', true)
+
+    yAxisGroup.append('text')
+        .attr('x', -dimensions.ctrHeight / 2)
+        .attr('y', -dimensions.margin.left + 15)
+        .attr('fill', 'black')
+        .html('Temperature &deg; F')
+        .style('transform', 'rotate(270deg)')
+        .style('text-anchor', 'middle')
 };
 
 drawScatterplot();
@@ -156,8 +189,8 @@ drawScatterplot();
 
 
 // Experimental  
-window.onresize = () => {
-    const chart = d3.select('#chart').selectAll('svg').remove()
-    console.log(chart)
-    drawScatterplot();
-}
+// window.onresize = () => {
+//     const chart = d3.select('#chart').selectAll('svg').remove()
+//     console.log(chart)
+//     drawScatterplot();
+// }
