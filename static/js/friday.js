@@ -64,7 +64,7 @@ const addElement = () => {
 
 const fetching = async () => {
   const returned = await d3.json("/d3-fetch");
-//   console.log(returned);
+  //   console.log(returned);
 
   d3.select(".d3-fetch")
     .select("table")
@@ -79,7 +79,7 @@ fetching();
 
 const fetchJsonFile = async () => {
   const data = await d3.json("/static/files/data.json");
-  return data
+  return data;
 };
 
 // Excercise ===============>
@@ -87,13 +87,12 @@ const fetchJsonFile = async () => {
 const drawScatterplot = async () => {
   // data
   const dataset = await fetchJsonFile();
-  
-  const xAccessor = d => d.currently.humidity
-  const yAccessor = d => d.currently.apparentTemperature
 
+  const xAccessor = (d) => d.currently.humidity;
+  const yAccessor = (d) => d.currently.apparentTemperature;
 
-  const offsetWidth = document.querySelector('#chart').offsetWidth
-  console.log(offsetWidth)
+  const offsetWidth = document.querySelector("#chart").offsetWidth;
+  console.log(offsetWidth);
   // Dimensions
   let dimensions = {
     width: offsetWidth,
@@ -105,13 +104,15 @@ const drawScatterplot = async () => {
       left: 50,
     },
     ctrWidth: 0,
-    ctrHeight: 0
+    ctrHeight: 0,
   };
 
-  dimensions.ctrWidth = dimensions.width - dimensions.margin.left - dimensions.margin.right;
-  dimensions.ctrHeight = dimensions.height - dimensions.margin.top - dimensions.margin.bottom;
+  dimensions.ctrWidth =
+    dimensions.width - dimensions.margin.left - dimensions.margin.right;
+  dimensions.ctrHeight =
+    dimensions.height - dimensions.margin.top - dimensions.margin.bottom;
 
-  console.log(dimensions)
+  console.log(dimensions);
 
   // Draw Image
   const svg = d3
@@ -128,69 +129,118 @@ const drawScatterplot = async () => {
       `translate(${dimensions.margin.left}, ${dimensions.margin.top})`
     );
 
-    // Scales
-    const xScale = d3.scaleLinear()
-        .domain(d3.extent(dataset, xAccessor)) // takes data and the arrow function to iterate between the data, it returns array of [min, max]
-        .rangeRound([0, dimensions.ctrWidth])
-        .clamp(true)
+  // Scales
+  const xScale = d3
+    .scaleLinear()
+    .domain(d3.extent(dataset, xAccessor)) // takes data and the arrow function to iterate between the data, it returns array of [min, max]
+    .rangeRound([0, dimensions.ctrWidth])
+    .clamp(true);
 
-    const yScale = d3.scaleLinear()
-        .domain(d3.extent(dataset, yAccessor))
-        .rangeRound([dimensions.ctrHeight, 0])
-        .nice()
-        .clamp(true)
+  const yScale = d3
+    .scaleLinear()
+    .domain(d3.extent(dataset, yAccessor))
+    .rangeRound([dimensions.ctrHeight, 0])
+    .nice()
+    .clamp(true);
 
-//   group_container.append("circle").attr("r", 15);
-// Draw Circle
-    group_container.selectAll('circle')
-        .data(dataset)
-        .join('circle')
-        .attr('cx', d => xScale(xAccessor(d)))
-        .attr('cy', d => yScale(yAccessor(d)))
-        .attr('r', 3)
-        .attr('fill', 'red')
-        .attr('data-temp', yAccessor)
-    
-    
-// Axis
-    const xAxis = d3.axisBottom(xScale)
-        // .tickValues([0.4, 0.5, 0.8])
-        .ticks(5)
-        .tickFormat(d => d * 100 + '%')
+  //   group_container.append("circle").attr("r", 15);
+  // Draw Circle
+  group_container
+    .selectAll("circle")
+    .data(dataset)
+    .join("circle")
+    .attr("cx", (d) => xScale(xAccessor(d)))
+    .attr("cy", (d) => yScale(yAccessor(d)))
+    .attr("r", 3)
+    .attr("fill", "red")
+    .attr("data-temp", yAccessor);
 
-    const yAxis = d3.axisLeft(yScale)
+  // Axis
+  const xAxis = d3
+    .axisBottom(xScale)
+    // .tickValues([0.4, 0.5, 0.8])
+    .ticks(5)
+    .tickFormat((d) => d * 100 + "%");
 
-    const xAxisGroup = group_container.append('g')
-        .call(xAxis)
-        .style('transform', `translateY(${dimensions.ctrHeight}px)`)
-        .classed('axis', true)
+  const yAxis = d3.axisLeft(yScale);
 
-    xAxisGroup.append('text')
-        .attr('x', dimensions.ctrWidth / 2)
-        .attr('y', dimensions.margin.bottom - 10)
-        .attr('fill', 'black')
-        .text('Humidity')
+  const xAxisGroup = group_container
+    .append("g")
+    .call(xAxis)
+    .style("transform", `translateY(${dimensions.ctrHeight}px)`)
+    .classed("axis", true);
 
-    const yAxisGroup = group_container.append('g')
-        .call(yAxis) 
-        .classed('axis', true)
+  xAxisGroup
+    .append("text")
+    .attr("x", dimensions.ctrWidth / 2)
+    .attr("y", dimensions.margin.bottom - 10)
+    .attr("fill", "black")
+    .text("Humidity");
 
-    yAxisGroup.append('text')
-        .attr('x', -dimensions.ctrHeight / 2)
-        .attr('y', -dimensions.margin.left + 15)
-        .attr('fill', 'black')
-        .html('Temperature &deg; F')
-        .style('transform', 'rotate(270deg)')
-        .style('text-anchor', 'middle')
+  const yAxisGroup = group_container
+    .append("g")
+    .call(yAxis)
+    .classed("axis", true);
+
+  yAxisGroup
+    .append("text")
+    .attr("x", -dimensions.ctrHeight / 2)
+    .attr("y", -dimensions.margin.left + 15)
+    .attr("fill", "black")
+    .html("Temperature &deg; F")
+    .style("transform", "rotate(270deg)")
+    .style("text-anchor", "middle");
 };
 
 drawScatterplot();
 
-
-
-// Experimental  
+// Experimental
 // window.onresize = () => {
 //     const chart = d3.select('#chart').selectAll('svg').remove()
 //     console.log(chart)
 //     drawScatterplot();
 // }
+
+const heatmap = async (el) => {
+  const incomes = await d3.json("static/files/data2.json");
+  const offsetWidth = document.querySelector(el).offsetWidth
+  console.log(offsetWidth)
+
+  // Dimensions
+  const dimensions = {
+    width: offsetWidth,
+    height: 150,
+  };
+
+  const box = 30;
+
+  // Draw Image
+  const svg = d3
+    .select(el)
+    .append("svg")
+    .attr("width", dimensions.width)
+    .attr("height", dimensions.height);
+
+  // Rectangles
+  svg
+    .append("g")
+    .attr("transform", `translate(2, 2)`)
+    .selectAll("rect")
+    .data(incomes)
+    .join("rect")
+    .attr("stroke", "black")
+    .attr("fill", "#ddd")
+    .attr("width", box - 3)
+    .attr("height", box - 3)
+    .attr("x", (d, i) => {
+      return box * (i % 20);
+    })
+    .attr("y", (d, i) => box * ((i / 20) | 0))
+    .attr("fill", (d, i) => {
+      return `hsl(${box * (i % 20)}, ${box * ((i / 20) | 0)}%, ${
+        box * (i % 20)
+      }%)`;
+    });
+};
+
+heatmap(".heatmap");
