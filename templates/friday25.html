@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %} {{context.title}} {% endblock %}
+{% block headImports %}
+    <link rel="stylesheet" href="static/css/friday.css">
+{% endblock %}
+{% block mainContent %}
+<div class="container p-2 friday-25"></div>
+{% endblock %}
+{% block jsBottom %}
+    <script src="static/js/dummy_data.js"></script>
+    <script src="static/js/friday25.js"></script>
+{% endblock %}

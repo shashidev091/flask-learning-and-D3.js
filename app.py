@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from flask import Flask, render_template, current_app, request, redirect
 from flask_sqlalchemy import SQLAlchemy
@@ -5,6 +6,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 db = SQLAlchemy(app)
+
+app.config.from_pyfile('config.py')
 
 
 class Todo(db.Model):
@@ -31,6 +34,7 @@ def home_page():
         'images': 'https://images.unsplash.com/photo-1667838140461-e803982c65da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
     })
 
+app.register_blueprint
 
 @app.route('/name')
 def get_my_name():
@@ -93,6 +97,8 @@ def test():
 
 @app.get("/d3_second")
 def render_d3():
+    request_args = list(request.args.keys())
+    print(request_args)
     return render_template('d3thrusday.html', context={
         "title": "d3 Second"
     })
@@ -121,6 +127,12 @@ def return_dummy_json():
         {"id": 11, "name": "Black Adam", "power": 910}
     ]
 
+
+@app.route('/friday-25')
+def friday_25():
+    return render_template('friday25.html', context={
+        'title': "D3.js friday 25th"
+    })
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)

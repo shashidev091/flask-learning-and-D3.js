@@ -203,8 +203,8 @@ drawScatterplot();
 
 const heatmap = async (el, scale) => {
   const fetchedData = await d3.json("static/files/data2.json");
-  const incomes = fetchedData.sort((a, b) => a - b)
-  const offsetWidth = document.querySelector(el).offsetWidth
+  const incomes = fetchedData.sort((a, b) => a - b);
+  const offsetWidth = document.querySelector(el).offsetWidth;
 
   // Dimensions
   const dimensions = {
@@ -224,22 +224,26 @@ const heatmap = async (el, scale) => {
   // Scale
   let colorScale;
 
-  if (scale === 'linear') {
-    colorScale = d3.scaleLinear()
+  if (scale === "linear") {
+    colorScale = d3
+      .scaleLinear()
       .domain(d3.extent(incomes))
-      .range(['white', 'red'])
-  } else if (scale === 'quantize') {
-    colorScale = d3.scaleQuantize()
+      .range(d3.schemeCategory10);
+  } else if (scale === "quantize") {
+    colorScale = d3
+      .scaleQuantize()
       .domain(d3.extent(incomes))
-      .range(['white', 'pink', 'red'])
-  } else if (scale === 'quantile') {
-    colorScale = d3.scaleQuantile()
+      .range(d3.schemeRdYlGn[11]);
+  } else if (scale === "quantile") {
+    colorScale = d3
+      .scaleQuantile()
       .domain(incomes)
-      .range(['white', 'pink', 'red'])
-  } else if (scale === 'threshold') {
-    colorScale = d3.scaleThreshold()
+      .range(["white", "pink", "red"]);
+  } else if (scale === "threshold") {
+    colorScale = d3
+      .scaleThreshold()
       .domain([45200, 135600])
-      .range(['white', 'pink', 'red'])
+      .range(d3.schemeTableau10);
   }
 
   // Rectangles
@@ -260,74 +264,96 @@ const heatmap = async (el, scale) => {
     .attr("fill", colorScale);
 };
 
-heatmap(".heatmap", 'linear');
-heatmap(".heatmap1", 'quantize');
-heatmap(".heatmap2", 'quantile');
-heatmap(".heatmap3", 'threshold');
-
+heatmap(".heatmap", "linear");
+heatmap(".heatmap1", "quantize");
+heatmap(".heatmap2", "quantile");
+heatmap(".heatmap3", "threshold");
 
 const scatterPlot = async () => {
-  const fetchedData = await d3.json('/static/files/data3.json')
-  
-  const dimensions = {
+  const fetchedData = await d3.json("/static/files/data3.json");
+
+  let dimensions = {
     width: 600,
-    height: 400
-  }
+    height: 500,
+    margin: {
+      top: 50,
+      right: 50,
+      bottom: 50,
+      left: 50,
+    },
+    ctrWidth: 0,
+    ctrHeight: 0,
+  };
 
-  const xAccessor = d => d.score
-  const yAccessor = d => d.totalSub
+  dimensions.ctrWidth =
+    dimensions.width - dimensions.margin.left - dimensions.margin.right;
+  dimensions.ctrHeight =
+    dimensions.height - dimensions.margin.top - dimensions.margin.bottom;
 
-  const svg = d3.select('.scatterplot')
-    .append('svg')
-    .attr('width', dimensions.width)
-    .attr('height', dimensions.height)
+  const xAccessor = (d) => d.score;
+  const yAccessor = (d) => d.totalSub;
+
+  const svg = d3
+    .select(".scatterplot")
+    .append("svg")
+    .attr("width", dimensions.width)
+    .attr("height", dimensions.height)
+    // .attr("transform", `translate(${25}, ${20})`);
+
+  const group_container = svg.append("g")
     .attr(
       "transform",
-      `translate(${20}, ${20})`
+      `translate(${dimensions.margin.left}, ${dimensions.margin.top})`
     );
 
-  
-  const group_container = svg.append('g')
-  
-  const xScale = d3.scaleLinear()
+  const xScale = d3
+    .scaleLinear()
     .domain(d3.extent(fetchedData, xAccessor))
-    .rangeRound([0, dimensions.width - 40])
+    .rangeRound([0, dimensions.ctrWidth])
     .nice()
-    .clamp(true)
+    .clamp(true);
 
-  const yScale = d3.scaleLinear()
+  const yScale = d3
+    .scaleLinear()
     .domain(d3.extent(fetchedData, yAccessor))
-    .rangeRound([dimensions.height - 40, 0])
-    .clamp(true)
-
+    .rangeRound([dimensions.ctrHeight, 0])
+    .clamp(true);
 
   group_container
-    .selectAll('circle')
+    .selectAll("circle")
     .data(fetchedData)
-    .join('circle')
-    .attr('r', 3)
-    .attr('cx', d => xScale(xAccessor(d)))
-    .attr('cy', d => yScale(yAccessor(d)))
-    .attr('fill', 'red')
-    .attr('data-temp', yAccessor)
+    .join("circle")
+    .attr("r", 3)
+    .attr("cx", (d) => xScale(xAccessor(d)))
+    .attr("cy", (d) => yScale(yAccessor(d)))
+    .attr("fill", "red")
+    .attr("data-temp", yAccessor);
 
+  const xAxis = d3.axisBottom(xScale);
 
-  const xAxis = d3
-    .axisBottom(xScale)
-  
-  const yAxis = d3
-    .axisLeft(yScale)
+  const yAxis = d3.axisLeft(yScale);
 
   const xAxisGroup = group_container
-      .append('g')
-      .call(xAxis)
-      .style('transform', `translateY(${dimensions.height - 40}px)`)
-    
-  xAxis.append('text')
-      .attr("x", (dimensions.width - 40 ) / 2)
-      .attr('y', (dimensions.height - 40) - 10)
-  
-  }
+    .append("g")
+    .call(xAxis)
+    .style("transform", `translateY(${dimensions.ctrHeight}px)`)
+    .classed("axis-two", true);
 
-scatterPlot()
+  xAxisGroup
+    .append("text")
+    .attr("x", (dimensions.ctrWidth) / 2)
+    .attr("y", dimensions.ctrHeight - 20);
 
+  const yAxisGroup = group_container.append("g").call(yAxis);
+
+  yAxisGroup
+    .append("text")
+    .attr("x", -dimensions.ctrHeight / 2)
+    .attr("y", -dimensions.margin.left + 15)
+    .attr("fill", "black")
+    .html("Temperature &deg; F")
+    .style("transform", "rotate(270deg)")
+    .style("text-anchor", "middle");
+};
+
+scatterPlot();
