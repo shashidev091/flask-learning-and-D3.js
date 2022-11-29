@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Milky Way Galaxy",
+    "size": 1e18
+  },
+  {
+    "name": "Nearest Star",
+    "size": 1e13
+  },
+  {
+    "name": "The Solar System",
+    "size": 1e9
+  },
+  {
+    "name": "The Sun",
+    "size": 1e6
+  },
+  {
+    "name": "The Earth",
+    "size": 1e3
+  },
+  {
+    "name": "A Mountain",
+    "size": 75
+  },
+  {
+    "name": "A Human",
+    "size": 1e-3
+  },
+  {
+    "name": "A Cell",
+    "size": 1e-8
+  },
+  {
+    "name": "An Atom",
+    "size": 1e-12
+  },
+  {
+    "name": "A Proton",
+    "size": 1e-15
+  }
+]
