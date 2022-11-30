@@ -19,7 +19,6 @@ class Todo(db.Model):
     def __repr__(self) -> str:
         return f'{self.id} - {self.title}'
 
-
 @app.route('/')
 def home_page():
     all_todos = Todo.query.all()

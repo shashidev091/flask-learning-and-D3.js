@@ -6,6 +6,17 @@
 {% block mainContent %}
     <div class="container p-2 friday-25"></div>
     <div class="container p-2 friday25-1"></div>
+    <div class="dropdown  justify-content-center">
+        <select class="btn btn-secondary dropdown-toggle" id="metric" >
+            <option value="humidity" selected  class="dropdown-item">Humidity</option>
+            <option value="temperature" class="dropdown-item">Temperature</option>
+            <option value="dewPoint" class="dropdown-item">Dew Point</option>
+            <option value="windSpeed" class="dropdown-item">Wind Speed</option>
+            <option value="cloudCover" class="dropdown-item">Cloud Cover</option>
+            <option value="ozone" class="dropdown-item">Ozone</option>
+        </select>
+      </div>
+    <div class="container p-2 d-flex friday25-3"></div>
 {% endblock %}
 {% block jsBottom %}
     <script src="static/js/dummy_data.js"></script>
