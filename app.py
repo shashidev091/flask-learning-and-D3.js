@@ -2,6 +2,7 @@ import os
 from datetime import datetime
 from flask import Flask, render_template, current_app, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from oopsLearning import oop1
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
@@ -19,6 +20,7 @@ class Todo(db.Model):
     def __repr__(self) -> str:
         return f'{self.id} - {self.title}'
 
+
 @app.route('/')
 def home_page():
     all_todos = Todo.query.all()
@@ -33,7 +35,9 @@ def home_page():
         'images': 'https://images.unsplash.com/photo-1667838140461-e803982c65da?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
     })
 
+
 app.register_blueprint
+
 
 @app.route('/name')
 def get_my_name():
@@ -132,6 +136,33 @@ def friday_25():
     return render_template('friday25.html', context={
         'title': "D3.js friday 25th"
     })
+
+
+@app.get('/flask-app')
+def learning_flask_with_python():
+    student = oop1.Student(name="Shashi Bhushan")
+    student.add_items('apple', 20)
+    student.add_items('mango', 70)
+    student.add_items('banana', 60)
+    student.add_items('orange', 40)
+
+    student.sum_all_items()
+
+    def modify(function):
+        def wrapper(*args):
+            return function(*args) + 200
+        return wrapper
+        
+
+    @modify
+    def add(a, b):
+        return a + b
+
+    print(add(22, 44))
+    student.return_new()
+
+    return student.full_name()
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=8000)
