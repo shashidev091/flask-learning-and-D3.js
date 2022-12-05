@@ -1,4 +1,4 @@
-
+from typing import List, Optional
 class Student:
     money = 0
 

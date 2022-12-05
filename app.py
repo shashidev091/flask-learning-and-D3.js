@@ -146,7 +146,11 @@ def learning_flask_with_python():
     student.add_items('banana', 60)
     student.add_items('orange', 40)
 
+    student2 = oop1.Student(name="Bhagat")
+
     student.sum_all_items()
+    print(student2.items, "==========")
+    print(student2.return_new())
 
     def modify(function):
         def wrapper(*args):
