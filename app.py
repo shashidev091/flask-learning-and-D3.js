@@ -1,9 +1,13 @@
 import os
+from dotenv import load_dotenv
 from datetime import datetime
 from flask import Flask, render_template, current_app, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from oopsLearning import oop1
+from uuid import uuid4
+
 app = Flask(__name__)
+load_dotenv()
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 db = SQLAlchemy(app)
@@ -203,8 +207,14 @@ def add_store(id: int):
 def get_store_items(id: int):
     for store in stores:
         if store.get('id') == id:
-            return {'items': store.get('items')}, 201
+            return {'items': store.get('items'), '.env': os.getenv('OWNER_NAME')}, 201
     return {'message': f'Store with id:{id} Not Found'}, 404
+
+
+@app.post('/store')
+def create_store():
+    store_data = request.get_json()
+    store_id = uuid
 
 
 if __name__ == "__main__":
