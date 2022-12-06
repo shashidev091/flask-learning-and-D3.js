@@ -173,7 +173,7 @@ def learning_flask_with_python():
 
 stores = [
     {
-        "id": 1,
+        "id": "82e4aac712754daa85fda0c2f91a0aaf",
         "name": "My Store",
         "items": [
             {
@@ -214,7 +214,10 @@ def get_store_items(id: int):
 @app.post('/store')
 def create_store():
     store_data = request.get_json()
-    store_id = uuid
+    store_id = uuid4().hex
+    new_store = {**store_data, "id": store_id}
+    stores.append(new_store)
+    return new_store, 201
 
 
 if __name__ == "__main__":
