@@ -5,6 +5,7 @@ from flask import Flask, render_template, current_app, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from oopsLearning import oop1
 from uuid import uuid4
+import csv
 
 app = Flask(__name__)
 load_dotenv()
@@ -218,6 +219,23 @@ def create_store():
     new_store = {**store_data, "id": store_id}
     stores.append(new_store)
     return new_store, 201
+
+
+@app.post('/create-csv')
+def create_csv():
+    req = request.get_json()
+    with open('./databases/db_1.csv', 'w', encoding='UTF8') as f:
+        # writer = csv.writer(f)
+        # writer.writerow(req["header"])
+        
+        # for data in req['datas']:
+        #     writer.writerow(data.values())
+
+        writer = csv.DictWriter(f, fieldnames=req.get('header'))
+        writer.writeheader()
+        writer.writerows(req.get('datas'))
+
+    return "done"
 
 
 if __name__ == "__main__":
