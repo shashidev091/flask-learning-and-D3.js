@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from oopsLearning import oop1
 from uuid import uuid4
 import csv
+from flask_smorest import abort
 
 app = Flask(__name__)
 load_dotenv()
@@ -227,7 +228,7 @@ def create_csv():
     with open('./databases/db_1.csv', 'w', encoding='UTF8') as f:
         # writer = csv.writer(f)
         # writer.writerow(req["header"])
-        
+
         # for data in req['datas']:
         #     writer.writerow(data.values())
 
@@ -236,6 +237,33 @@ def create_csv():
         writer.writerows(req.get('datas'))
 
     return "done"
+
+
+@app.get('/read-csv/<string:filename>')
+def get_all_data(filename):
+    csv_data = []
+    try:
+        with open(f'./databases/{filename}', 'r', encoding='utf-8') as f:
+            # csv_data = csv.reader(f)
+            # headers = list(csv_data)[0]
+
+            reader = csv.DictReader(f)
+            for row in reader:
+                csv_data.append(row)
+
+    except FileNotFoundError:
+        abort(404, message="File not found.")
+
+    try:
+
+        with open(f'./databases/{filename}', 'w', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=csv_data[0])
+            writer.writeheader()
+            writer.writerows(csv_data)
+    except:
+        return abort(404, message="File not found.")
+
+    return csv_data
 
 
 if __name__ == "__main__":
