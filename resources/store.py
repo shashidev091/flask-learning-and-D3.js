@@ -8,7 +8,7 @@ from db import stores
 bluePrint = Blueprint("stores", __name__, description="Operations on Stores")
 
 
-@bluePrint.route('/store/<string:store_id>')
+@bluePrint.route('/stores/<string:store_id>')
 class Store(MethodView):
     def get(self, store_id):
         return store_id

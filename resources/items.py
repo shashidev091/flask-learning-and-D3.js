@@ -10,13 +10,27 @@ bluePrint = Blueprint('items', __name__, description="items of Operations")
 @bluePrint.route("/items")
 class Items(MethodView):
     def get(self):
-        return {"items": list(Items)}
+        return {"items": items}
+
+    def post(self):
+        request_item = request.get_json()
+        teest = {}
+        for item in teest:
+            print("jskdfj")
+        for item in items.values():
+            print("asjdkasd ")
+            if item.get('item') == request_item.get('item'):
+                return abort(400, message="Item already present in the list")
+
+        print(items.values())
+        return "It ended here"
 
 
 @bluePrint.route("/items/<string:item_id>")
 class Item(MethodView):
     def get(self, item_id):
-        for item in items:
+        for item in items.values():
+            print(item)
             if item['item_id'] == item_id:
                 return item
             else:

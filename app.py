@@ -1,13 +1,14 @@
 import os
 from dotenv import load_dotenv
 from datetime import datetime
-from flask import Flask, render_template, current_app, request, redirect
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from oopsLearning import oop1
 from uuid import uuid4
 import csv
 from flask_smorest import abort, Api
 from resources.store import bluePrint as StoreBluePrint
+from resources.items import bluePrint as ItemBluePrint
 
 
 app = Flask(__name__)
@@ -28,6 +29,7 @@ app.config.from_pyfile('config.py')
 api = Api(app)
 
 api.register_blueprint(StoreBluePrint)
+api.register_blueprint(ItemBluePrint)
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
