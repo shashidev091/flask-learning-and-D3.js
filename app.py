@@ -6,7 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 from oopsLearning import oop1
 from uuid import uuid4
 import csv
-from flask_smorest import abort
+from flask_smorest import abort, Api
+from resources.store import bluePrint as StoreBluePrint
+
 
 app = Flask(__name__)
 load_dotenv()
@@ -14,8 +16,18 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todo.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 db = SQLAlchemy(app)
 
-app.config.from_pyfile('config.py')
+app.config['PROPAGATE_EXCEPTIONS'] = True
+app.config["API_TITLE"] = "Stores REST API"
+app.config["API_VERSION"] = "v1"
+app.config["OPENAPI_VERSION"] = "3.0.3"
+app.config["OPENAPI_URL_PREFIX"] = "/"
+app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
+app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist"
 
+app.config.from_pyfile('config.py')
+api = Api(app)
+
+api.register_blueprint(StoreBluePrint)
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
