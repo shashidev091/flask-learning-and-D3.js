@@ -1,10 +1,8 @@
-import os
 from dotenv import load_dotenv
 from datetime import datetime
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from oopsLearning import oop1
-from uuid import uuid4
 import csv
 from flask_smorest import abort, Api
 from resources.store import bluePrint as StoreBluePrint
@@ -201,39 +199,34 @@ stores = [
 ]
 
 
-@app.get("/store")
-def get_store():
-    return {"stores": stores}
+# @app.put('/store/<int:id>')
+# def add_store(id: int):
+#     print(stores.index(id))
+#     for store in stores:
+#         if store['id'] == id:
+#             store["items"].append({
+#                 "name": request.json["name"],
+#                 "price": request.json["price"]
+#             })
+#             return stores, 201
+#     return {'message': 'Store not found'}, 404
 
 
-@app.put('/store/<int:id>')
-def add_store(id: int):
-    print(stores.index(id))
-    for store in stores:
-        if store['id'] == id:
-            store["items"].append({
-                "name": request.json["name"],
-                "price": request.json["price"]
-            })
-            return stores, 201
-    return {'message': 'Store not found'}, 404
+# @app.get('/store/<int:id>/items')
+# def get_store_items(id: int):
+#     for store in stores:
+#         if store.get('id') == id:
+#             return {'items': store.get('items'), '.env': os.getenv('OWNER_NAME')}, 201
+#     return {'message': f'Store with id:{id} Not Found'}, 404
 
 
-@app.get('/store/<int:id>/items')
-def get_store_items(id: int):
-    for store in stores:
-        if store.get('id') == id:
-            return {'items': store.get('items'), '.env': os.getenv('OWNER_NAME')}, 201
-    return {'message': f'Store with id:{id} Not Found'}, 404
-
-
-@app.post('/store')
-def create_store():
-    store_data = request.get_json()
-    store_id = uuid4().hex
-    new_store = {**store_data, "id": store_id}
-    stores.append(new_store)
-    return new_store, 201
+# @app.post('/store')
+# def create_store():
+#     store_data = request.get_json()
+#     store_id = uuid4().hex
+#     new_store = {**store_data, "id": store_id}
+#     stores.append(new_store)
+#     return new_store, 201
 
 
 @app.post('/create-csv')

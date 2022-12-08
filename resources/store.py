@@ -3,6 +3,7 @@ from flask import request
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
 from db import stores
+from schema import StoreSchema
 
 
 bluePrint = Blueprint("stores", __name__, description="Operations on Stores")
@@ -20,10 +21,22 @@ class Store(MethodView):
         return {"message": "Item Updated"}
 
 
-@bluePrint.route('/store')
+@bluePrint.route('/stores')
 class StoreList(MethodView):
+    @bluePrint.response(200, StoreSchema)
     def get(self):
         return {"store": list(stores.values())}
 
-    def post(self):
-        return request.get_json()
+    @bluePrint.arguments(StoreSchema)
+    @bluePrint.response(200, StoreSchema)
+    def post(self, store_data):
+        for store in stores.values():
+            if store.get('name') == store_data.get('name'):
+                abort(400, message=f"🚫 ⇢ Store with the name {store_data.get('name')} already exists. 🥺")
+        
+        stores[uuid4().hex] = store_data
+        print(stores)
+        return {
+            "message": "Store created Successfully 👍🏼",
+            "data": store_data
+        }
