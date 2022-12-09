@@ -17,7 +17,7 @@ class Store(MethodView):
     @bluePrint.response(200, StoreSchema)
     def delete(self, store_id):
         if stores.get(store_id) != None:
-            del stores.get(store_id)
+            del stores[store_id]
             return {"message": "Item Deleted"}
         else:
             return abort(404, message=f"Store with store_id({store_id}) not found")
