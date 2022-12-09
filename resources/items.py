@@ -10,9 +10,9 @@ bluePrint = Blueprint('items', __name__, description="items of Operations")
 
 @bluePrint.route("/items")
 class Items(MethodView):
-    @bluePrint.response(200, ItemSchema)
+    @bluePrint.response(200, ItemSchema(many=True))
     def get(self):
-        return {"items": items}
+        return items.values()
 
     @bluePrint.arguments(ItemSchema)
     @bluePrint.response(200, ItemSchema)
