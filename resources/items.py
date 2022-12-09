@@ -39,7 +39,7 @@ class Item(MethodView):
 
 
     @bluePrint.arguments(ItemUpdateSchema)
-    @bluePrint.response(ItemSchema)
+    @bluePrint.response(200, ItemSchema)
     def put(self, item_id):
         item_request = request.get_json()
         for item in items:
