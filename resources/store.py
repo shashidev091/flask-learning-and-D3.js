@@ -28,7 +28,7 @@ class Store(MethodView):
 
 @bluePrint.route('/stores')
 class StoreList(MethodView):
-    @bluePrint.response(200, StoreSchema)
+    @bluePrint.response(200, StoreSchema(many=True))
     def get(self):
         return {"store": list(stores.values())}
 
