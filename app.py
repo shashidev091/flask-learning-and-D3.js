@@ -1,17 +1,15 @@
 import os
-import csv
-from datetime import datetime
 
 from dotenv import load_dotenv
-from flask import Flask, redirect, render_template, request
+from flask import Flask
+from flask_jwt_extended import JWTManager
 from flask_smorest import Api, abort
-from flask_sqlalchemy import SQLAlchemy
 
+from db import db
 from oopsLearning import oop1
 from resources.items import bluePrint as ItemBluePrint
 from resources.store import bluePrint as StoreBluePrint
-from db import db
-import models
+from resources.tag import bluePrint as TagBluePrint
 
 
 def create_app(db_url=None):
@@ -37,12 +35,16 @@ def create_app(db_url=None):
     # app.config.from_pyfile('config.py')
     api = Api(app)
 
+    app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
+    jwt = JWTManager(app)
+
     @app.before_first_request
     def create_tables():
         db.create_all()
 
     api.register_blueprint(StoreBluePrint)
     api.register_blueprint(ItemBluePrint)
+    api.register_blueprint(TagBluePrint)
 
     # class Todo(db.Model):
     #     id = db.Column(db.Integer, primary_key=True)
