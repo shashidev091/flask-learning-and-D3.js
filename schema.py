@@ -33,3 +33,14 @@ class StoreSchema(PlainStoreSchema):
 class TagSchema(PlainStoreSchema):
     store_id = fields.Int(load_only=True)
     store = fields.Nested(PlainStoreSchema(), dump_only=True)
+
+
+class UserSchema(Schema):
+    user_id = fields.Int(dump_only=True)
+    user_first_name = fields.Str(required=True)
+    user_middle_name = fields.Str(required=True)
+    user_last_name = fields.Str(required=True)
+    user_email = fields.Str(required=True)
+    user_phone = fields.Str(required=True)
+    user_gender = fields.Str(required=True)
+    user_password = fields.Str(required=True, load_only=True)
