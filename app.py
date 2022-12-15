@@ -10,6 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 from oopsLearning import oop1
 from resources.items import bluePrint as ItemBluePrint
 from resources.store import bluePrint as StoreBluePrint
+from resources.tag import bluePrint as TagBluePrint
 from db import db
 import models
 
@@ -43,6 +44,7 @@ def create_app(db_url=None):
 
     api.register_blueprint(StoreBluePrint)
     api.register_blueprint(ItemBluePrint)
+    api.register_blueprint(TagBluePrint)
 
     # class Todo(db.Model):
     #     id = db.Column(db.Integer, primary_key=True)
