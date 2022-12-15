@@ -10,6 +10,7 @@ from oopsLearning import oop1
 from resources.items import bluePrint as ItemBluePrint
 from resources.store import bluePrint as StoreBluePrint
 from resources.tag import bluePrint as TagBluePrint
+from resources.user import bluePrint as UserBluePrint
 
 
 def create_app(db_url=None):
@@ -45,6 +46,7 @@ def create_app(db_url=None):
     api.register_blueprint(StoreBluePrint)
     api.register_blueprint(ItemBluePrint)
     api.register_blueprint(TagBluePrint)
+    api.register_blueprint(UserBluePrint)
 
     # class Todo(db.Model):
     #     id = db.Column(db.Integer, primary_key=True)
