@@ -17,10 +17,10 @@ class User(MethodView):
     def post(self, user_credentials):
         user = UserModel.query.filter(
             UserModel.user_email == user_credentials["user_email"]).first()
-        if user and pbkdf2_sha256.verify(user.user_password, user_credentials["user_password"]):
-            user_token = create_access_token(identity=user.user_id)
+        if user and pbkdf2_sha256.verify(user_credentials["user_password"], user.user_password):
+            access_token = create_access_token(identity=user.user_id)
 
-            return {"Authorization": user_token}, 201
+            return {"access_token": access_token}, 201
 
         abort(401)
 
