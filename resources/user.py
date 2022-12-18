@@ -6,7 +6,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from db import db
 from models import UserModel
-from schema import UserSchema, CredentialSchema
+from schema import UserSchema, CredentialSchema, ForgetPassword, OtpSchema
 
 bluePrint = Blueprint("users", __name__, description="Operations on User")
 
@@ -41,3 +41,29 @@ class UserRegister(MethodView):
                 abort(500, message=str(e))
         
         return {"message":f"🟢 {user.user_first_name}, Created Successfully"}
+
+@bluePrint.route("/forgetPassword")
+class User(MethodView):
+    @bluePrint.arguments(ForgetPassword)
+    def post(self, user_data):
+        user = UserModel.query.filter(
+            UserModel.user_email == user_data["user_email"]).first()
+        if user.user_phone_number == user_data["user_phone"]:
+            print("Sending OTP")
+            print("Otp Sent")
+            return f"Otp Sent to {user_data['user_phone']}", 201
+
+        abort(401)
+
+
+@bluePrint.route("/verify-otp")
+class User(MethodView):
+    @bluePrint.arguments(OtpSchema)
+    def post(self, user_data):
+        user = UserModel.query.filter(
+            UserModel.user_email == user_data["user_email"]).first()
+        if user.user_phone_number == user_data["user_phone"]:
+            if user_data["user_otp"] == "otp":
+                return f"Otp VERIFIED", 201
+
+        abort(401)

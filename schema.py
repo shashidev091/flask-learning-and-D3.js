@@ -51,3 +51,11 @@ class UserSchema(Schema):
 class CredentialSchema(Schema):
     user_email = fields.Str(required=True, load_only=True)
     user_password = fields.Str(required=True, load_only=True)
+
+
+class ForgetPassword(Schema):
+    user_email = fields.Str(required=True)
+    user_phone = fields.Str(required=True)
+
+class OtpSchema(ForgetPassword):
+    user_otp = fields.Str(required=True)
